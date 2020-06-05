@@ -37,4 +37,23 @@ def to_usd(my_price):
 
 # TODO: write some Python code here to produce the desired output
 
-print(products)
+# print(products)
+
+products_id = [str(x['id']) for x in products] # building list of the IDs in the product list and also converting to string datatype 
+
+print(products_id)
+
+order_id = []
+x =[]
+
+while True:
+    x = input(f'Please input ID number of item. If the order is complete, input "DONE". ')
+    if x == "DONE":
+        break
+    else:     
+        if x not in products_id:
+            x = input(f'Item ID not found. Please double check ID or input another item ID. If the order is complete, input "DONE". ')
+    order_id.append(x)
+
+
+print(order_id)
