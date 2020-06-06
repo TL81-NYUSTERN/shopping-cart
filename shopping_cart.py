@@ -35,49 +35,32 @@ def to_usd(my_price):
     """
     return f"${my_price:,.2f}" #> $12,000.71
 
-## TODO: write some Python code here to produce the desired output
-#
-## print(products)
-#
-#products_id = [str(x['id']) for x in products] # building list of the IDs in the product list and also converting to string datatype 
-#
-#print(products_id)
-#
-#order_id = []
-#x =[]
-#
-#while True:
-#    x = input(f'Please input ID number of item. If the order is complete, input "DONE". ')
-#    if x == "DONE":
-#        break
-#    else:     
-#        if x not in products_id:
-#            x = input(f'Item ID not found. Please double check ID or input another item ID. If the order is complete, input "DONE". ')
-#    order_id.append(x)
-#
-#
-#print(order_id)
+# TODO: write some Python code here to produce the desired output
 
+products_id = [x['id'] for x in products] # building list of all the IDs in the entire product list and also converting to string datatype 
 
-product_ids = [1, 8, 6, 16, 6] # temporary list of valid ids for testing purposes
+print(products_id)
 
-print("SHOPPING CART ITEM IDENTIFIERS INCLUDE:", product_ids)
+order_id = []
 
-def name_lookup(i):
-    product_name = [x['name'] for x in products if x['id'] == i] # list comprehension to get the name based on ID
-    return product_name[0]
+while True:
 
-def price_lookup(i):
-    product_price = [float(x['price']) for x in products if x['id'] == i] # list comprehension to get the price based on ID and also converting datatype to float
-    return product_price[0]
+    x = input(f'Please input ID number of item. If the order is complete, input "DONE". ')
 
-order_total = 0
+    if x == "DONE": 
+        break    
 
-for y in product_ids:
-    print(f" -  {name_lookup(y)} ({to_usd(price_lookup(y))})")
-    order_total = order_total + price_lookup(y)
+    try: # check to make sure input is a number
+        x = int(x)
+    except ValueError:
+        print(f'Invalid entry. Please try again.')
+        continue
 
-print(to_usd(order_total))
+    if int(x) not in products_id: # check to make sure item ID is in the product list
+        x = print(f'Item ID not found.')
+
+    else:
+        order_id.append(int(x))
 
 
 from datetime import datetime
@@ -89,6 +72,43 @@ TRAITOR JOES
 WWW.TRAITORJOES.COM
 ---------------------------------
 CHECKOUT AT: {current_datetime}
+---------------------------------""")
+
+product_ids = [1, 8, 6, 16, 6] # temporary list of valid ids for testing purposes
+
+print("SHOPPING CART ITEMS:", order_id)
+
+def name_lookup(i):
+    product_name = [x['name'] for x in products if x['id'] == i] # list comprehension to get the name based on ID
+    return product_name[0]
+
+def price_lookup(i):
+    product_price = [float(x['price']) for x in products if x['id'] == i] # list comprehension to get the price based on ID and also converting datatype to float
+    return product_price[0]
+
+order_total = 0
+
+for y in order_id: # looping through each product in the list
+    print(f" -  {name_lookup(y)} ({to_usd(price_lookup(y))})") # printing name and price for product
+    order_total = order_total + price_lookup(y) # adding price of product to running total
+
+#print(to_usd(order_total))
+
+tax_rate = 8.75 / 100 # tax rate set to NYC sales tax rate of 8.75%
+
+tax_total = order_total * tax_rate
+
+total_with_tax = order_total + tax_total # sum of order subtotal and tax
+
+print(f"""---------------------------------
+SUBTOTAL: {to_usd(order_total)}
+TAX: {to_usd(tax_total)}
+TOTAL: {to_usd(total_with_tax)}
 ---------------------------------
-""")
+THANK YOU FOR SHOPPING AT TRAITOR JOES!""")
+
+
+
+
+
 
