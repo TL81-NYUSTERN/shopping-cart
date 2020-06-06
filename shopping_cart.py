@@ -35,25 +35,60 @@ def to_usd(my_price):
     """
     return f"${my_price:,.2f}" #> $12,000.71
 
-# TODO: write some Python code here to produce the desired output
+## TODO: write some Python code here to produce the desired output
+#
+## print(products)
+#
+#products_id = [str(x['id']) for x in products] # building list of the IDs in the product list and also converting to string datatype 
+#
+#print(products_id)
+#
+#order_id = []
+#x =[]
+#
+#while True:
+#    x = input(f'Please input ID number of item. If the order is complete, input "DONE". ')
+#    if x == "DONE":
+#        break
+#    else:     
+#        if x not in products_id:
+#            x = input(f'Item ID not found. Please double check ID or input another item ID. If the order is complete, input "DONE". ')
+#    order_id.append(x)
+#
+#
+#print(order_id)
 
-# print(products)
 
-products_id = [str(x['id']) for x in products] # building list of the IDs in the product list and also converting to string datatype 
+product_ids = [1, 8, 6, 16, 6] # temporary list of valid ids for testing purposes
 
-print(products_id)
+print("SHOPPING CART ITEM IDENTIFIERS INCLUDE:", product_ids)
 
-order_id = []
-x =[]
+def name_lookup(i):
+    product_name = [x['name'] for x in products if x['id'] == i] # list comprehension to get the name based on ID
+    return product_name[0]
 
-while True:
-    x = input(f'Please input ID number of item. If the order is complete, input "DONE". ')
-    if x == "DONE":
-        break
-    else:     
-        if x not in products_id:
-            x = input(f'Item ID not found. Please double check ID or input another item ID. If the order is complete, input "DONE". ')
-    order_id.append(x)
+def price_lookup(i):
+    product_price = [float(x['price']) for x in products if x['id'] == i] # list comprehension to get the price based on ID and also converting datatype to float
+    return product_price[0]
+
+order_total = 0
+
+for y in product_ids:
+    print(f" -  {name_lookup(y)} ({to_usd(price_lookup(y))})")
+    order_total = order_total + price_lookup(y)
+
+print(to_usd(order_total))
 
 
-print(order_id)
+from datetime import datetime
+current_datetime = datetime.now().strftime("%m/%d/%Y %I:%M %p") # getting the current date and time for the receipt
+
+
+print(f"""---------------------------------
+TRAITOR JOES
+WWW.TRAITORJOES.COM
+---------------------------------
+CHECKOUT AT: {current_datetime}
+---------------------------------
+""")
+
